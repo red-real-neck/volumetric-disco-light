@@ -13,4 +13,35 @@ body {
   top: 0;
   left: 0;
   outline: none;
+  z-index: 1;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.play-pause-group {
+  position: absolute;
+  z-index: 2;
+  bottom: 5vh;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ellipse {
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.playBtn {
+  transform: scale(0.7) translateX(10%);
+}
+
+.pauseBtn {
+  transform: scale(0.7);
 }

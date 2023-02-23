@@ -35,6 +35,9 @@ export class PostController {
       uniforms: {
         uTime: { value: 0 },
         uMap: { value: null },
+        uLowFrequency: { value: 0 },
+        uMidFrequency: { value: 0 },
+        uHighFrequency: { value: 0 },
       },
       vertexShader: vertexPost,
       fragmentShader: fragmentPost,

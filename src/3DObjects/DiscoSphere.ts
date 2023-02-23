@@ -13,12 +13,12 @@ export default class DiscoSphere {
   }
 
   init() {
-    const geometry = new THREE.SphereGeometry(0.5, 30, 30);
+    const geometry = new THREE.SphereGeometry(1, 30, 30);
     const material = new THREE.RawShaderMaterial({
       side: THREE.DoubleSide,
       uniforms: {
         uTime: { value: 0 },
-        uMap: { value: new THREE.TextureLoader().load("./map.jpg") },
+        uMap: { value: new THREE.TextureLoader().load("./map2.jpg") },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,

@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import DiscoSphere from "../3DObjects/DiscoSphere";
+import { AudioController } from "../Controllers/AudioController/AudioController";
 
 import PerspectiveCameraController from "../Controllers/CameraController/PerspectiveCameraController";
 import { PostController } from "../Controllers/PostController/PostController";
@@ -14,11 +15,9 @@ export default class App {
   init() {
     this._canvas = document.querySelector("canvas.webgl")!;
     const scene = new THREE.Scene();
-    const textLoader = new THREE.TextureLoader();
-    const gradient = textLoader.load("./gradient.jpg");
     const discoSphere = new DiscoSphere(scene);
 
-    scene.background = gradient;
+    scene.background = new THREE.Color("black");
 
     const sizesController = new ScreenSizesController(this._canvas);
     sizesController.init();
@@ -45,7 +44,18 @@ export default class App {
 
     const clock = new THREE.Clock();
 
+    const audioController = new AudioController();
+
     const tick = () => {
+      if (audioController.context) {
+        // console.log("frequencyAnalyze:", audioController.frequencyAnalyze);
+        postController.materialOrtho.uniforms.uLowFrequency.value =
+          audioController.frequencyAnalyze.low;
+        postController.materialOrtho.uniforms.uMidFrequency.value =
+          audioController.frequencyAnalyze.mid;
+        postController.materialOrtho.uniforms.uHighFrequency.value =
+          audioController.frequencyAnalyze.high;
+      }
       const elapsedTime = clock.getElapsedTime();
 
       controls.update();
