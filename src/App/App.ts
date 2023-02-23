@@ -3,6 +3,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import DiscoSphere from "../3DObjects/DiscoSphere";
 
 import PerspectiveCameraController from "../Controllers/CameraController/PerspectiveCameraController";
+import { PostController } from "../Controllers/PostController/PostController";
 import { RendererController } from "../Controllers/RendererController/RendererController";
 import { ScreenSizesController } from "../Controllers/ScreenSizesController/ScreenSizesController";
 
@@ -40,14 +41,26 @@ export default class App {
 
     sizesController.setControllers(cameraController, rendererController);
 
+    const postController = new PostController(sizesController.sizes);
+
     const clock = new THREE.Clock();
 
     const tick = () => {
       const elapsedTime = clock.getElapsedTime();
 
       controls.update();
+      discoSphere.update(elapsedTime);
 
+      rendererController.renderer.setRenderTarget(postController.postTexture);
       rendererController.renderer.render(scene, cameraController.camera);
+
+      postController.updateUniform();
+
+      rendererController.renderer.setRenderTarget(null);
+      rendererController.renderer.render(
+        postController.scene,
+        postController.camera
+      );
 
       window.requestAnimationFrame(tick);
     };

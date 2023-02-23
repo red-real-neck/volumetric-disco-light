@@ -6,6 +6,7 @@ import vertexShader from "../shaders/vertexShader.glsl";
 
 export default class DiscoSphere {
   private _scene: THREE.Scene;
+  private _sphere: THREE.Mesh;
   constructor(scene: THREE.Scene) {
     this._scene = scene;
     this.init();
@@ -16,13 +17,18 @@ export default class DiscoSphere {
     const material = new THREE.RawShaderMaterial({
       side: THREE.DoubleSide,
       uniforms: {
-        time: { value: 0 },
+        uTime: { value: 0 },
+        uMap: { value: new THREE.TextureLoader().load("./map.jpg") },
       },
       vertexShader: vertexShader,
       fragmentShader: fragmentShader,
     });
-    const sphere = new THREE.Mesh(geometry, material);
+    this._sphere = new THREE.Mesh(geometry, material);
 
-    this._scene.add(sphere);
+    this._scene.add(this._sphere);
+  }
+
+  update(dt) {
+    this._sphere.rotation.y = Math.PI * dt * 0.2;
   }
 }
