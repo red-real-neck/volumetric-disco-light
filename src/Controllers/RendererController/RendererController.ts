@@ -16,6 +16,7 @@ export class RendererController {
 
     this._renderer = new THREE.WebGLRenderer({
       canvas: this._canvas,
+      antialias: true,
     });
     this._renderer.setSize(
       sizesController.sizes.width,
